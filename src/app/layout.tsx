@@ -1,8 +1,9 @@
-import "./globals.css";
+import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body
-				className={cn("min-h-screen bg-background font-sans ", inter.className)}
-			>
-				<div className="container relative min-h-screen">{children}</div>
+			<head />
+			<body className={cn("font-sans antialiased", inter.className)}>
+				<Providers>
+					<main className="flex flex-col h-screen bg-muted/50">{children}</main>
+				</Providers>
 			</body>
 		</html>
 	);
