@@ -1,4 +1,5 @@
 import React from "react";
+import { type UseChatHelpers } from "ai/react";
 
 import { cn } from "@/lib/utils";
 
@@ -11,9 +12,28 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { IconPlus, IconArrowElbow } from "@/components/ui/icons";
 import Textarea from "react-textarea-autosize";
 
-export default function PromtForm() {
+interface PromptProps extends Pick<UseChatHelpers, "input" | "setInput"> {
+	onSubmit: (value: string) => Promise<void>;
+	isLoading: boolean;
+}
+
+export default function PromtForm({
+	onSubmit,
+	input,
+	setInput,
+	isLoading,
+}: PromptProps) {
 	return (
-		<form>
+		<form
+			onSubmit={async (e) => {
+				e.preventDefault();
+				if (!input?.trim()) {
+					return;
+				}
+				setInput("");
+				await onSubmit(input);
+			}}
+		>
 			<div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
 				<Tooltip>
 					<TooltipTrigger asChild>
