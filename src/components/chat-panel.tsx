@@ -1,31 +1,22 @@
 "use client";
 
 import { type UseChatHelpers } from "ai/react";
+import { useChat } from "ai/react";
 
 import React from "react";
 import PromtForm from "@/components/prompt-form";
-
-interface ChatPanelProps
-	extends Pick<
-		UseChatHelpers,
-		| "append"
-		| "isLoading"
-		| "reload"
-		| "messages"
-		| "stop"
-		| "input"
-		| "setInput"
-	> {
+interface ChatPanelProps {
 	id?: string;
 }
 
-export default function ChatPanel({
-	append,
-	input,
-	setInput,
-	isLoading,
-	id,
-}: ChatPanelProps) {
+export default function ChatPanel({ id }: ChatPanelProps) {
+	const { append, input, setInput, isLoading } = useChat({
+		body: {
+			id,
+			previewToken: process.env.OPENAI_API_KEY,
+		},
+	});
+
 	return (
 		<div className="fixed inset-x-0 bottom-0 bg-gradient-to-b from-muted/10 from-10% to-muted/30 to-50%">
 			<div className="mx-auto sm:max-w-2xl sm:px-4">

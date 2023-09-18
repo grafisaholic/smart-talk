@@ -26,6 +26,8 @@ export default function PromtForm({
 	return (
 		<form
 			onSubmit={async (e) => {
+				console.log("input", input);
+
 				e.preventDefault();
 				if (!input?.trim()) {
 					return;
@@ -55,6 +57,7 @@ export default function PromtForm({
 					rows={1}
 					placeholder="Send a message."
 					spellCheck={false}
+					onChange={(e) => setInput(e.target.value)}
 					className="min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
 				/>
 
